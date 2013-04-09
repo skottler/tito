@@ -31,7 +31,8 @@ from tito.common import (debug, error_out, run_command,
         find_spec_file, get_project_name, get_latest_tagged_version,
         get_script_path, get_spec_version_and_release, replace_version,
         tag_exists_locally, tag_exists_remotely, head_points_to_tag, undo_tag,
-        increase_version, reset_release, increase_zstream)
+        increase_version, reset_release, increase_zstream, discover_releng,
+        discover_spec)
 from tito.exception import TitoException
 from tito.config_object import ConfigObject
 
@@ -45,7 +46,7 @@ class VersionTagger(ConfigObject):
     """
 
     def __init__(self, global_config=None, keep_version=False, offline=False, user_config=None, pkg_config=None):
-        """ 
+        """
         pkg_config - Package specific configuration.
 
         global_config - Global configuration from rel-eng/tito.props.

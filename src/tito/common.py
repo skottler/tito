@@ -585,3 +585,35 @@ def increase_zstream(release_string):
     regex = re.compile(r"^(.*%{\?dist})$")
     bumped_string = regex.sub(r"\g<1>.0", release_string)
     return increase_version(bumped_string)
+
+def _top_level_item(item, directory=False):
+    """
+    First parameter is the relative path to the glob whose existence is being
+    validated. Second parameter is whether the glob is a directory or a file.
+    """
+    if directory:
+        if not os.path.exists(os.path.dirname(item)):
+            return False
+    else:
+        if not os.path.exists(item):
+            return False
+
+    return True
+
+def locate(pattern):
+    for path, dirs, files in os.walk(os.path.abspath(os.curdir)):
+        for filename in fnmatch.filter(files, pattern):
+            yield os.path.join(path, filename)
+
+def discover_releng():
+    if _top_level_item("rel-eng", True):
+        return "rel-eng"
+    else:
+        return locate("rel-eng")
+
+def discover_spec():
+    spec = filter(os.path.isfile, glob.glob('./*.spec'))
+    if _top_level_item(spec):
+        return spec
+    else:
+        return locate('*.spec')
