@@ -15,7 +15,7 @@ Shared code for builder and tagger class
 """
 
 import os
-from tito.common import find_git_root
+from tito.common import find_git_root, discover_releng
 
 class ConfigObject(object):
     """
@@ -29,7 +29,7 @@ class ConfigObject(object):
         global_config - Global configuration from rel-eng/tito.props.
         """
         self.config = global_config
-        
+
         # Override global configurations using local configurations
         for section in pkg_config.sections():
             for options in pkg_config.options(section):
@@ -39,5 +39,5 @@ class ConfigObject(object):
                         pkg_config.get(section, options))
 
         self.git_root = find_git_root()
-        self.rel_eng_dir = os.path.join(self.git_root, "rel-eng")
+        self.rel_eng_dir = os.path.join(self.git_root, discover_releng())
 

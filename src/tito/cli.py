@@ -178,7 +178,7 @@ class BaseCliModule(object):
         Read global build.py configuration from the rel-eng dir of the git
         repository we're being run from.
         """
-        rel_eng_dir = os.path.join(find_git_root(), "rel-eng")
+        rel_eng_dir = os.path.join(find_git_root(), discover_releng())
         filename = os.path.join(rel_eng_dir, GLOBAL_BUILD_PROPS_FILENAME)
         if not os.path.exists(filename):
             # HACK: Try the old filename location, pre-tito rename:
@@ -496,7 +496,7 @@ class ReleaseModule(BaseCliModule):
         """
         Read the releaser targets from rel-eng/releasers.conf.
         """
-        rel_eng_dir = os.path.join(find_git_root(), "rel-eng")
+        rel_eng_dir = os.path.join(find_git_root(), discover_releng())
         filename = os.path.join(rel_eng_dir, RELEASERS_CONF_FILENAME)
         config = ConfigParser.ConfigParser()
         config.read(filename)
@@ -720,7 +720,7 @@ class InitModule(BaseCliModule):
         # calling main will result in a configuration error.
         should_commit = False
 
-        rel_eng_dir = os.path.join(find_git_root(), "rel-eng")
+        rel_eng_dir = os.path.join(find_git_root(), discover_releng())
         print("Creating tito metadata in: %s" % rel_eng_dir)
 
         propsfile = os.path.join(rel_eng_dir, GLOBAL_BUILD_PROPS_FILENAME)
@@ -814,7 +814,7 @@ class ReportModule(BaseCliModule):
         print("Scanning for packages that may need to be tagged...")
         print("")
         git_root = find_git_root()
-        rel_eng_dir = os.path.join(git_root, "rel-eng")
+        rel_eng_dir = os.path.join(git_root, discover_releng())
         os.chdir(git_root)
         package_metadata_dir = os.path.join(rel_eng_dir, "packages")
         for root, dirs, files in os.walk(package_metadata_dir):
@@ -840,7 +840,7 @@ class ReportModule(BaseCliModule):
         print("Scanning for packages that may need to be tagged...")
         print("")
         git_root = find_git_root()
-        rel_eng_dir = os.path.join(git_root, "rel-eng")
+        rel_eng_dir = os.path.join(git_root, discover_releng())
         os.chdir(git_root)
         package_metadata_dir = os.path.join(rel_eng_dir, "packages")
         for root, dirs, files in os.walk(package_metadata_dir):

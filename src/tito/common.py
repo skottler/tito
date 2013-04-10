@@ -503,7 +503,7 @@ def get_latest_tagged_version(package_name):
     Returns None if file does not exist.
     """
     git_root = find_git_root()
-    rel_eng_dir = os.path.join(git_root, "rel-eng")
+    rel_eng_dir = os.path.join(git_root, discover_releng())
     file_path = "%s/packages/%s" % (rel_eng_dir, package_name)
     debug("Getting latest package info from: %s" % file_path)
     if not os.path.exists(file_path):
