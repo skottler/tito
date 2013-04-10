@@ -174,7 +174,10 @@ def find_spec_file(in_dir=None):
 
     Returns only the file name, rather than the full path.
     """
-    return find_file_with_extension(in_dir, '.spec')
+    if not os.path.exists(find_file_with_extension('.spec')):
+        return discover_spec()
+    else:
+        return find_file_with_extension(in_dir, '.spec')
 
 
 def find_gemspec_file(in_dir=None):
